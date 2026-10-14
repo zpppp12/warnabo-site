@@ -12,13 +12,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 </head>
 <body>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-  (function () {
-    var h = window.location.hash;
-    if (h && /(invite_token|recovery_token|confirmation_token|email_change_token)/.test(h)) {
-      window.location.replace("/admin/" + h);
-    }
-  })();
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", function (user) {
+      if (!user) {
+        window.netlifyIdentity.on("login", function () {
+          window.location.href = "/admin/";
+        });
+      }
+    });
+    window.netlifyIdentity.init();
+  }
 </script>
 <header class="site-header">
   <div class="container header-inner">
