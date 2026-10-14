@@ -1,0 +1,155 @@
+{
+  "products": [
+    {
+      "slug": "new-design",
+      "name": "New Designs",
+      "badge": "New 2026",
+      "image": "images/new-design.jpg",
+      "alt": "New design foil balloons wholesale",
+      "blurb": "Fresh additions every season — we track what is trending on marketplaces and in decor trends, then turn it into foil before the season peaks. Tell us your market and we will send the current new-design list.",
+      "specs": [
+        {"label": "Update cycle", "value": "Every season, ahead of demand"},
+        {"label": "Format", "value": "Design list with photos + specs"},
+        {"label": "MOQ", "value": "500 pcs per design, mixable"},
+        {"label": "Lead time", "value": "15–25 days production"}
+      ],
+      "ctaText": "Get the new-design list",
+      "ctaHref": "contact.html?product=new-design",
+      "showOnHome": false,
+      "showOnProducts": true,
+      "order": 1
+    },
+    {
+      "slug": "number-letter",
+      "name": "Number & Letter Balloons",
+      "badge": "Best seller",
+      "image": "images/number-letter.jpg",
+      "alt": "Wholesale number and letter foil balloons",
+      "blurb": "The birthday-party workhorse. 16″ for table decor, 32″ for statement numbers. Full 0–9 and A–Z sets, in matte, metallic and confetti-filled finishes.",
+      "specs": [
+        {"label": "Sizes", "value": "16″ (40 cm) / 32″ (81 cm)"},
+        {"label": "Formats", "value": "Single digit/letter, stand sets, garland kits"},
+        {"label": "Finishes", "value": "Matte, metallic, glitter, confetti-filled"},
+        {"label": "MOQ", "value": "500 pcs per design"},
+        {"label": "Carton qty", "value": "[fill in your carton qty]"}
+      ],
+      "ctaText": "Quote this line",
+      "ctaHref": "contact.html?product=number-letter",
+      "showOnHome": true,
+      "showOnProducts": true,
+      "order": 2
+    },
+    {
+      "slug": "super-shapes",
+      "name": "Super Shapes",
+      "badge": "300+ designs",
+      "image": "images/super-shapes.jpg",
+      "alt": "Super shape foil balloons",
+      "blurb": "Stars, hearts, moons, animals, vehicles, food shapes and seasonal characters. We keep 300+ dies in stock, so most shapes ship without tooling cost. Custom dies also available.",
+      "specs": [
+        {"label": "Popular sizes", "value": "18″–45″ inflated"},
+        {"label": "Stock dies", "value": "300+ shapes, no tooling fee"},
+        {"label": "Custom die", "value": "Tooling from [your tooling price], reusable"},
+        {"label": "MOQ", "value": "500 pcs per shape"}
+      ],
+      "ctaText": "Quote this line",
+      "ctaHref": "contact.html?product=super-shapes",
+      "showOnHome": true,
+      "showOnProducts": true,
+      "order": 3
+    },
+    {
+      "slug": "bobo-bubble",
+      "name": "BoBo & Bubble Balloons",
+      "badge": "Premium line",
+      "image": "images/bobo-bubble.png",
+      "alt": "BoBo and bubble balloons",
+      "blurb": "Clear or tinted bubble balloons stuffed with feathers, confetti, tassels or LED lights — the highest-margin decor items in the market. Sold individually or as DIY packs.",
+      "specs": [
+        {"label": "Sizes", "value": "18″–36″ bubble"},
+        {"label": "Fillings", "value": "Feather, confetti, tassel, LED, flowers"},
+        {"label": "DIY packs", "value": "Sticker + balloon + tools, retail-ready"},
+        {"label": "MOQ", "value": "500 pcs"}
+      ],
+      "ctaText": "Quote this line",
+      "ctaHref": "contact.html?product=bobo-bubble",
+      "showOnHome": true,
+      "showOnProducts": true,
+      "order": 4
+    },
+    {
+      "slug": "seasonal",
+      "name": "Seasonal & Occasion Balloons",
+      "badge": "Plan 6 months ahead",
+      "image": "images/seasonal.png",
+      "alt": "Seasonal and occasion foil balloons",
+      "blurb": "Christmas, Halloween, Valentine's Day, Easter, graduation, baby shower and wedding ranges. Seasonal buyers should book 4–6 months before the season — tell us your market and we will flag the booking window.",
+      "specs": [
+        {"label": "Seasons", "value": "Xmas · Halloween · Valentine · Easter · Wedding · Graduation"},
+        {"label": "Programs", "value": "Single designs or full themed collections"},
+        {"label": "Booking window", "value": "4–6 months before season"},
+        {"label": "MOQ", "value": "500 pcs per design"}
+      ],
+      "ctaText": "Quote this line",
+      "ctaHref": "contact.html?product=seasonal",
+      "showOnHome": true,
+      "showOnProducts": true,
+      "order": 5
+    },
+    {
+      "slug": "custom-oem",
+      "name": "Custom Logo Balloons",
+      "badge": "",
+      "image": "images/custom-oem.svg",
+      "alt": "Custom logo foil balloons OEM",
+      "blurb": "Your brand, printed to Pantone and die-cut to your shape. Full OEM service, 7-day first sample.",
+      "specs": [
+        {"label": "Printing", "value": "1–8 colors, Pantone matching"},
+        {"label": "Sample", "value": "7 days after artwork approval"},
+        {"label": "MOQ", "value": "500 pcs per design"}
+      ],
+      "ctaText": "OEM process",
+      "ctaHref": "custom-oem.html",
+      "showOnHome": true,
+      "showOnProducts": false,
+      "order": 6
+    },
+    {
+      "slug": "bulk-resellers",
+      "name": "Bulk for Resellers",
+      "badge": "",
+      "image": "images/bulk-resellers.svg",
+      "alt": "Bulk assorted balloon packs for resellers",
+      "blurb": "Mixed-container programs and ready-to-resell assorted packs for Amazon, eBay and retail chains.",
+      "specs": [
+        {"label": "Packs", "value": "Assorted by occasion, season or theme"},
+        {"label": "Label", "value": "Your polybag, insert and barcode"},
+        {"label": "MOQ", "value": "500 pcs per design"}
+      ],
+      "ctaText": "View details",
+      "ctaHref": "products.html#bulk-resellers",
+      "showOnHome": true,
+      "showOnProducts": false,
+      "order": 7
+    },
+    {
+      "slug": "air-filled",
+      "name": "Air-Filled & Basic Shapes",
+      "badge": "",
+      "image": "images/air-filled.jpg",
+      "alt": "Air-filled foil balloons",
+      "blurb": "Air-filled rounds, stars and hearts that hold shape without helium — plus water-fill weights and bases that turn balloons into floor decor. Ideal for decor kits.",
+      "specs": [
+        {"label": "Shapes", "value": "Round 18″, star, heart, dome, 4D spheres"},
+        {"label": "Accessories", "value": "Water bases, balloon stands, glue dots, ribbons"},
+        {"label": "Kits", "value": "Complete arch kits with quantity guide"},
+        {"label": "MOQ", "value": "500 pcs"}
+      ],
+      "ctaText": "Quote this line",
+      "ctaHref": "contact.html?product=air-filled",
+      "showOnHome": false,
+      "showOnProducts": true,
+      "order": 8
+    }
+  ]
+}
