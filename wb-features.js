@@ -77,6 +77,67 @@
   }
   try { mountGoogle(); } catch (e) {}
 
+
+  /* ===== 联系页：联系方式卡片（跟随后台 settings）===== */
+  var CM = {
+    zh: { wa: "WhatsApp", waTip: "最快回复，可直接发送照片", mail: "电子邮件", mailTip: "详细的简报和文件", hours: "工作时间", addr: "地址", quote: "最快报价应包含哪些内容" },
+    en: { wa: "WhatsApp", waTip: "fastest reply, send photos here", mail: "Email", mailTip: "for detailed briefs and documents", hours: "Working hours", addr: "Address", quote: "What to include for the fastest quote" }
+  };
+  function renderContactMethods() {
+    var box = document.getElementById("contact-methods");
+    if (!box) return;
+    fetch((window.location.pathname.indexOf("/blog/") > -1 ? "../" : "") + "data/site.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (s) {
+        var d = CM[getLang()] || CM.en;
+        var wa = "https://wa.me/" + (s.whatsapp || "") + "?text=" + encodeURIComponent(s.whatsappText || "");
+        box.innerHTML =
+          '<div class="card" style="padding:18px"><h3 style="font-size:16px">' + d.wa + '</h3><p style="font-size:14px"><a href="' + wa + '" target="_blank" rel="noopener">+' + (s.whatsapp || "") + '</a> — ' + d.waTip + '.</p></div>' +
+          '<div class="card" style="padding:18px"><h3 style="font-size:16px">' + d.mail + '</h3><p style="font-size:14px"><a href="mailto:' + (s.email || "") + '">' + (s.email || "") + '</a> — ' + d.mailTip + '.</p></div>' +
+          '<div class="card" style="padding:18px"><h3 style="font-size:16px">' + d.hours + '</h3><p style="font-size:14px">' + (s.hours || "") + '</p></div>' +
+          '<div class="card" style="padding:18px"><h3 style="font-size:16px">' + d.addr + '</h3><p style="font-size:14px">' + (s.address || "") + '</p></div>';
+      }).catch(function () {});
+  }
+
+  /* ===== 询盘表单：Netlify Forms 提交 ===== */
+  function wireForm() {
+    var form = document.getElementById("inquiry-form");
+    if (!form || form.getAttribute("data-wired") === "1") return;
+    var clone = form.cloneNode(true);
+    clone.setAttribute("data-wired", "1");
+    form.parentNode.replaceChild(clone, form);
+    clone.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var status = document.getElementById("form-status");
+      var btn = clone.querySelector("button[type=submit]");
+      var data = new FormData(clone);
+      var params = new URLSearchParams();
+      data.forEach(function (v, k) { params.append(k, typeof v === "string" ? v : v.name); });
+      btn.disabled = true;
+      btn.textContent = getLang() === "zh" ? "发送中..." : "Sending...";
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
+      }).then(function () {
+        clone.reset();
+        if (status) {
+          status.textContent = getLang() === "zh" ? "已收到你的询盘！我们会在 12 小时内回复。" : "Thank you! Your inquiry has been received. We reply within 12 hours.";
+          status.style.color = "#1FA855";
+        }
+        btn.disabled = false;
+        btn.textContent = getLang() === "zh" ? "发送询盘" : "Send Inquiry";
+      }).catch(function () {
+        if (status) {
+          status.textContent = getLang() === "zh" ? "发送失败，请直接发邮件或加 WhatsApp。" : "Something went wrong. Please email us directly or contact us on WhatsApp.";
+          status.style.color = "#C24329";
+        }
+        btn.disabled = false;
+        btn.textContent = getLang() === "zh" ? "发送询盘" : "Send Inquiry";
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     var pill = document.createElement("button");
     pill.id = "lang-pill";
@@ -85,5 +146,7 @@
     pill.addEventListener("click", function () { apply(getLang() === "en" ? "zh" : "en"); });
     document.body.appendChild(pill);
     apply(getLang());
+    renderContactMethods();
+    wireForm();
   });
 })();
