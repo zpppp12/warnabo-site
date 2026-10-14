@@ -17,21 +17,57 @@ collections:
             name: products
             widget: list
             fields:
-              - {label: "标识 Slug", name: slug, widget: string}
-              - {label: "名称 Name", name: name, widget: string}
-              - {label: "角标 Badge", name: badge, widget: string, required: false}
-              - {label: "图片 Image", name: image, widget: image}
-              - {label: "图片说明 Alt", name: alt, widget: string, required: false}
-              - {label: "简介 Blurb", name: blurb, widget: text}
-              - {label: "规格 Specs", name: specs, widget: list, required: false,
-                 fields:
-                   - {label: "项目", name: label, widget: string}
-                   - {label: "值", name: value, widget: string}}
-              - {label: "按钮文字 CTA", name: ctaText, widget: string, required: false}
-              - {label: "按钮链接 CTA URL", name: ctaHref, widget: string, required: false}
-              - {label: "首页显示", name: showOnHome, widget: boolean, default: true}
-              - {label: "产品页显示", name: showOnProducts, widget: boolean, default: true}
-              - {label: "排序 Order", name: order, widget: number, default: 0}
+              - label: "标识 Slug"
+                name: slug
+                widget: string
+              - label: "名称 Name"
+                name: name
+                widget: string
+              - label: "角标 Badge"
+                name: badge
+                widget: string
+                required: false
+              - label: "图片 Image"
+                name: image
+                widget: image
+              - label: "图片说明 Alt"
+                name: alt
+                widget: string
+                required: false
+              - label: "简介 Blurb"
+                name: blurb
+                widget: text
+              - label: "规格 Specs"
+                name: specs
+                widget: list
+                required: false
+                fields:
+                  - label: "项目"
+                    name: label
+                    widget: string
+                  - label: "值"
+                    name: value
+                    widget: string
+              - label: "按钮文字 CTA"
+                name: ctaText
+                widget: string
+                required: false
+              - label: "按钮链接 CTA URL"
+                name: ctaHref
+                widget: string
+                required: false
+              - label: "首页显示"
+                name: showOnHome
+                widget: boolean
+                default: true
+              - label: "产品页显示"
+                name: showOnProducts
+                widget: boolean
+                default: true
+              - label: "排序 Order"
+                name: order
+                widget: number
+                default: 0
 
   - name: settings
     label: "全站设置 Settings"
@@ -40,8 +76,18 @@ collections:
         label: "联系信息"
         file: data/site.json
         fields:
-          - {label: "WhatsApp 号码(含国家码)", name: whatsapp, widget: string}
-          - {label: "WhatsApp 预填消息", name: whatsappText, widget: string}
-          - {label: "邮箱 Email", name: email, widget: string}
-          - {label: "地址 Address", name: address, widget: string}
-          - {label: "工作时间 Hours", name: hours, widget: string}
+          - label: "WhatsApp 号码(含国家码)"
+            name: whatsapp
+            widget: string
+          - label: "WhatsApp 预填消息"
+            name: whatsappText
+            widget: string
+          - label: "邮箱 Email"
+            name: email
+            widget: string
+          - label: "地址 Address"
+            name: address
+            widget: string
+          - label: "工作时间 Hours"
+            name: hours
+            widget: string
