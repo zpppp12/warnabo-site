@@ -12,6 +12,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 </head>
 <body>
+<script>
+  (function () {
+    var h = window.location.hash;
+    if (h && /(invite_token|recovery_token|confirmation_token|email_change_token)/.test(h)) {
+      window.location.replace("/admin/" + h);
+    }
+  })();
+</script>
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
