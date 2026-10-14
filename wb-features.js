@@ -1,6 +1,6 @@
 (function () {
   var CSS = ""
-    + ".wa-float{width:auto;padding:0 20px 0 16px;border-radius:999px;gap:9px;display:flex;align-items:center}"
+    + ".wa-float{width:auto;left:22px;right:auto!important;padding:0 20px 0 16px;border-radius:999px;gap:9px;display:flex;align-items:center}"
     + ".wa-float .wa-label{color:#fff;font-weight:600;font-size:14px;white-space:nowrap}"
     + ".lang-pill{position:fixed;right:20px;top:84px;z-index:60;display:inline-flex;align-items:center;gap:8px;background:#0E2338;color:#fff;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}"
     + ".lang-pill:hover{background:#16324F}.lang-pill .flag{font-size:15px;line-height:1}"
@@ -58,7 +58,7 @@
   gtWrap.innerHTML = '<span style="font-size:12px;color:#5C6B7A;margin-right:4px">More</span><span id="google_translate_element"></span>';
   document.body.appendChild(gtWrap);
   var gtStyle = document.createElement("style");
-  gtStyle.textContent = "#google_translate_element{display:inline-block;vertical-align:middle}#google_translate_element select{font-size:12px;padding:3px 6px;border:1px solid #E4E8EE;border-radius:6px;color:#0E2338;background:#fff}.goog-te-gadget{font-size:0!important}.goog-te-gadget .goog-te-combo{margin:0!important}.goog-logo-link,.goog-te-banner-frame{display:none!important}body{top:0!important}";
+  gtStyle.textContent = "#google_translate_element{display:inline-block;vertical-align:middle}#google_translate_element select{font-size:12px;padding:3px 6px;border:1px solid #E4E8EE;border-radius:6px;color:#0E2338;background:#fff}.goog-te-gadget{font-size:0!important}.goog-te-gadget .goog-te-combo{margin:0!important}.goog-logo-link,.goog-te-banner-frame{display:none!important}body{top:0!important}.goog-te-banner-frame,.goog-te-balloon-frame,#goog-gt-tt,.goog-te-menu-frame{display:none!important}";
   document.head.appendChild(gtStyle);
   window.googleTranslateElementInit = function () {
     try {
