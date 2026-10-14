@@ -48,7 +48,9 @@
   <div class="container grid grid-2" style="gap:40px; align-items:start">
     <div class="form-card">
       <h2>Inquiry form</h2>
-      <form id="inquiry-form" class="form-grid mt-3" action="https://formspree.io/f/your-form-id" method="POST">
+      <form id="inquiry-form" class="form-grid mt-3" name="inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
+        <input type="hidden" name="form-name" value="inquiry">
+        <p class="hidden" style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" name="name" type="text" required></div>
         <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text"></div>
         <div class="field"><label for="f-country">Country <span class="req">*</span></label><input id="f-country" name="country" type="text" required></div>
@@ -76,15 +78,12 @@
         <div class="field full"><button class="btn btn-primary" type="submit">Send Inquiry</button></div>
       </form>
       <p id="form-status" class="form-note" role="status"></p>
-      <p class="form-note">表单未接入前为演示模式 — 按 README 接入 Formspree（免费 50 封/月）后即可收到邮件。</p>
+      <p class="form-note">提交后我们会收到邮件并直接回复你（通常在 12 小时内）。</p>
     </div>
     <div>
       <h2>Other ways to reach us</h2>
       <div class="grid mt-3" style="gap:14px">
-        <div class="card" style="padding:18px"><h3 style="font-size:16px">WhatsApp</h3><p style="font-size:14px"><a href="https://wa.me/8613800000000?text=Hi%20Warnabo%2C%20I%20found%20you%20on%20your%20website%20and%20I%27m%20interested%20in%20your%20foil%20balloons." target="_blank" rel="noopener">+86 138 0000 0000</a> — fastest reply, send photos here.</p></div>
-        <div class="card" style="padding:18px"><h3 style="font-size:16px">Email</h3><p style="font-size:14px"><a href="mailto:hello@warnabo.com">hello@warnabo.com</a> — for detailed briefs and documents.</p></div>
-        <div class="card" style="padding:18px"><h3 style="font-size:16px">Working hours</h3><p style="font-size:14px">Monday–Saturday, 9:00–18:00 (GMT+8). We answer EU and US buyers early and late — you will always get a reply within 12 hours.</p></div>
-        <div class="card" style="padding:18px"><h3 style="font-size:16px">Address</h3><p style="font-size:14px">[Your full factory address] — replace with real address for map and trust.</p></div>
+<div id="contact-methods" class="grid" style="gap:14px"></div>
       </div>
       <div class="card mt-3" style="background:var(--bg-soft)">
         <h3 style="font-size:16px">What to include for the fastest quote</h3>
