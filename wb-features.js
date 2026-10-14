@@ -49,13 +49,41 @@
     document.querySelectorAll(".wa-float .wa-label").forEach(function (el) { el.textContent = d["wa.label"]; });
   }
 
+
+  /* ===== Google 翻译组件（多语言兜底）===== */
+  function mountGoogle() {
+  var gtWrap = document.createElement("div");
+  gtWrap.id = "wb-gt";
+  gtWrap.style.cssText = "position:fixed;right:20px;top:128px;z-index:59;background:#fff;border:1px solid #E4E8EE;border-radius:999px;padding:4px 10px;box-shadow:0 2px 8px rgba(14,35,56,.10);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif";
+  gtWrap.innerHTML = '<span style="font-size:12px;color:#5C6B7A;margin-right:4px">More</span><span id="google_translate_element"></span>';
+  document.body.appendChild(gtWrap);
+  var gtStyle = document.createElement("style");
+  gtStyle.textContent = "#google_translate_element{display:inline-block;vertical-align:middle}#google_translate_element select{font-size:12px;padding:3px 6px;border:1px solid #E4E8EE;border-radius:6px;color:#0E2338;background:#fff}.goog-te-gadget{font-size:0!important}.goog-te-gadget .goog-te-combo{margin:0!important}.goog-logo-link,.goog-te-banner-frame{display:none!important}body{top:0!important}";
+  document.head.appendChild(gtStyle);
+  window.googleTranslateElementInit = function () {
+    try {
+      new google.translate.TranslateElement({
+        pageLanguage: "en",
+        includedLanguages: "en,zh-CN,es,de,fr,pt,ar,ru,ja,ko",
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, "google_translate_element");
+    } catch (e) {}
+  };
+  var gs = document.createElement("script");
+  gs.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  gs.async = true;
+  document.head.appendChild(gs);
+  }
+  try { mountGoogle(); } catch (e) {}
+
   document.addEventListener("DOMContentLoaded", function () {
-    apply(getLang());
     var pill = document.createElement("button");
     pill.id = "lang-pill";
     pill.className = "lang-pill";
     pill.setAttribute("aria-label", "Switch language");
     pill.addEventListener("click", function () { apply(getLang() === "en" ? "zh" : "en"); });
     document.body.appendChild(pill);
+    apply(getLang());
   });
 })();
