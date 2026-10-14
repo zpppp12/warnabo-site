@@ -88,7 +88,25 @@
       }).then(function (r) {
         return r.json().then(function (j) { return { ok: r.ok, j: j }; });
       }).then(function (res) {
-        if (!res.ok || !res.j.access_token) { msg(res.j.msg || "链接已失效，请在 Netlify 后台重发重置邮件", false); btn.disabled = false; btn.textContent = "确认并进入后台"; return; }
+        if (!res.ok || !res.j.access_token) {
+          // 备用通道：未确认账号的令牌按"邀请"处理（确认+设密码一步完成）
+          return fetch("/.netlify/identity/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: token, password: p1, type: "signup" })
+          }).then(function (r3) {
+            return r3.json().then(function (j3) {
+              if (r3.ok && j3.access_token) {
+                storeSession(j3); msg("设置成功，正在进入后台...", true);
+                setTimeout(function () { window.location.href = "/admin/"; }, 800);
+                return null;
+              }
+              msg(j3.msg || "链接已失效，请在 Netlify 后台重新发送邀请邮件", false);
+              btn.disabled = false; btn.textContent = "确认并进入后台";
+              return null;
+            });
+          });
+        }
         return fetch("/.netlify/identity/user", {
           method: "PUT",
           headers: { "Content-Type": "application/json", "Authorization": "Bearer " + res.j.access_token },
