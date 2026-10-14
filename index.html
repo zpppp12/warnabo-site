@@ -12,18 +12,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 </head>
 <body>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", function (user) {
-      if (!user) {
-        window.netlifyIdentity.on("login", function () {
-          window.location.href = "/admin/";
-        });
-      }
-    });
-    window.netlifyIdentity.init();
+(function () {
+  var h = window.location.hash || "";
+  var m = h.match(/(invite_token|recovery_token)=([^&]+)/);
+  if (!m) return;
+  var kind = m[1], token = m[2];
+
+  var box = document.createElement("div");
+  box.id = "warnabo-setpwd";
+  box.style.cssText = "position:fixed;inset:0;background:rgba(14,35,56,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif";
+  box.innerHTML =
+    '<div style="background:#fff;border-radius:14px;max-width:400px;width:100%;padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,.3)">' +
+      '<div style="font-size:20px;font-weight:800;color:#0E2338;margin-bottom:6px">设置后台密码</div>' +
+      '<div style="font-size:13px;color:#5C6B7A;margin-bottom:20px">首次使用请设置密码，设置完成后自动进入后台</div>' +
+      '<div id="wsp-msg" style="display:none;font-size:13px;padding:10px 12px;border-radius:8px;margin-bottom:14px"></div>' +
+      '<label style="display:block;font-size:13px;font-weight:600;color:#0E2338;margin-bottom:6px">新密码（至少 6 位）</label>' +
+      '<input id="wsp-p1" type="password" placeholder="请输入新密码" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #E4E8EE;border-radius:8px;font-size:15px;margin-bottom:14px">' +
+      '<label style="display:block;font-size:13px;font-weight:600;color:#0E2338;margin-bottom:6px">再输一次</label>' +
+      '<input id="wsp-p2" type="password" placeholder="再输入一次" style="width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #E4E8EE;border-radius:8px;font-size:15px;margin-bottom:18px">' +
+      '<button id="wsp-btn" style="width:100%;padding:13px;background:#12938F;color:#fff;border:0;border-radius:9px;font-size:15px;font-weight:700;cursor:pointer">确认并进入后台</button>' +
+      '<div style="font-size:12px;color:#8A97A5;margin-top:14px;text-align:center">如果链接失效，请联系重新发送邀请邮件</div>' +
+    '</div>';
+  document.body.appendChild(box);
+
+  function msg(text, ok) {
+    var el = document.getElementById("wsp-msg");
+    el.textContent = text;
+    el.style.display = "block";
+    el.style.background = ok ? "#EAF7EF" : "#FCEBEB";
+    el.style.color = ok ? "#1FA855" : "#A32D2D";
   }
+
+  function storeSession(res) {
+    var exp = Date.now() + 3600000;
+    try {
+      var payload = JSON.parse(atob(res.access_token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+      if (payload && payload.exp) exp = payload.exp * 1000;
+    } catch (e) {}
+    var obj = {
+      access_token: res.access_token,
+      refresh_token: res.refresh_token,
+      expires_in: res.expires_in,
+      token_type: res.token_type || "bearer",
+      user: res.user,
+      expires_at: exp
+    };
+    localStorage.setItem("gotrue.user", JSON.stringify(obj));
+  }
+
+  document.getElementById("wsp-btn").addEventListener("click", function () {
+    var p1 = document.getElementById("wsp-p1").value;
+    var p2 = document.getElementById("wsp-p2").value;
+    if (!p1 || p1.length < 6) { msg("密码至少 6 位", false); return; }
+    if (p1 !== p2) { msg("两次输入不一致", false); return; }
+    var btn = document.getElementById("wsp-btn");
+    btn.disabled = true; btn.textContent = "处理中...";
+
+    if (kind === "invite_token") {
+      fetch("/.netlify/identity/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token, password: p1, type: "signup" })
+      }).then(function (r) {
+        return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+      }).then(function (res) {
+        if (res.ok && res.j.access_token) { storeSession(res.j); msg("设置成功，正在进入后台...", true); setTimeout(function () { window.location.href = "/admin/"; }, 800); }
+        else { msg(res.j.msg || "链接已失效，请重新发送邀请邮件", false); btn.disabled = false; btn.textContent = "确认并进入后台"; }
+      }).catch(function () { msg("网络错误，请刷新重试", false); btn.disabled = false; btn.textContent = "确认并进入后台"; });
+    } else {
+      fetch("/.netlify/identity/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: token, type: "recovery" })
+      }).then(function (r) {
+        return r.json().then(function (j) { return { ok: r.ok, j: j }; });
+      }).then(function (res) {
+        if (!res.ok || !res.j.access_token) { msg(res.j.msg || "链接已失效，请在 Netlify 后台重发重置邮件", false); btn.disabled = false; btn.textContent = "确认并进入后台"; return; }
+        return fetch("/.netlify/identity/user", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + res.j.access_token },
+          body: JSON.stringify({ password: p1 })
+        }).then(function (r2) {
+          return r2.json().then(function (j2) { return { ok: r2.ok, j2: j2, first: res.j }; });
+        });
+      }).then(function (res2) {
+        if (!res2) return;
+        if (res2.ok && res2.j2.access_token) { storeSession(res2.j2); msg("设置成功，正在进入后台...", true); setTimeout(function () { window.location.href = "/admin/"; }, 800); }
+        else { msg(res2.j2.msg || "设置失败，请重试", false); btn.disabled = false; btn.textContent = "确认并进入后台"; }
+      }).catch(function () { msg("网络错误，请刷新重试", false); btn.disabled = false; btn.textContent = "确认并进入后台"; });
+    }
+  });
+})();
 </script>
 <header class="site-header">
   <div class="container header-inner">
